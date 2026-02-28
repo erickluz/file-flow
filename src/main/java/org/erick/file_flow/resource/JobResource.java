@@ -174,7 +174,7 @@ public class JobResource {
             new JobResponse(
                 job.getId(),
                 job.getStatus().getDescription(), 
-                job.getDocuments().size(), 
+                job.getTotalDocuments(), 
                 job.getDocumentsCreated(), 
                 job.getDoneDocuments(), 
                 job.getFailedDocuments()
