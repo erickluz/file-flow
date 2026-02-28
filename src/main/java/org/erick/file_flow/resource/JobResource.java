@@ -5,6 +5,7 @@ import org.erick.file_flow.domain.Job;
 import org.erick.file_flow.domain.JobDocument;
 import org.erick.file_flow.dto.DocumentRequest;
 import org.erick.file_flow.dto.DocumentResponse;
+import org.erick.file_flow.dto.ErrorResponse;
 import org.erick.file_flow.dto.JobRequest;
 import org.erick.file_flow.dto.JobResponse;
 import org.erick.file_flow.dto.ListOfDocuments;
@@ -83,7 +84,12 @@ public class JobResource {
         @ApiResponse(
             responseCode = "400",
             description = "Regra de negocio violada",
-            content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Erro interno do servidor",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
         )
     })
     public ResponseEntity<DocumentResponse> createDocument(
@@ -123,7 +129,12 @@ public class JobResource {
         @ApiResponse(
             responseCode = "400",
             description = "Regra de negocio violada",
-            content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Erro interno do servidor",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
         )
     })
     public ResponseEntity<URLResponse> getGeneratedURL(
@@ -148,7 +159,12 @@ public class JobResource {
         @ApiResponse(
             responseCode = "400",
             description = "Regra de negocio violada",
-            content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Erro interno do servidor",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
         )
     })
     public ResponseEntity<JobResponse> getJob(
@@ -180,7 +196,12 @@ public class JobResource {
         @ApiResponse(
             responseCode = "400",
             description = "Regra de negocio violada",
-            content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Erro interno do servidor",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
         )
     })
     public ResponseEntity<ListOfDocuments> getDocumentsByJobId(
@@ -217,7 +238,12 @@ public class JobResource {
         @ApiResponse(
             responseCode = "400",
             description = "Regra de negocio violada",
-            content = @Content(schema = @Schema(implementation = org.springframework.http.ProblemDetail.class))
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+        ),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Erro interno do servidor",
+            content = @Content(schema = @Schema(implementation = ErrorResponse.class))
         )
     })
     public ResponseEntity<DocumentResponse> getDocumentById(

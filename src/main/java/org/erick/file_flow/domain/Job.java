@@ -27,6 +27,9 @@ public class Job {
     @OneToMany(mappedBy = "job", fetch = FetchType.EAGER)
     private List<JobDocument> documents = new ArrayList<>();
 
+    public Job() {
+    }
+
     public Job(JobStatus status, Integer totalDocuments, Integer documentsCreated, Integer doneDocuments,
             Integer failedDocuments, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.status = status;
