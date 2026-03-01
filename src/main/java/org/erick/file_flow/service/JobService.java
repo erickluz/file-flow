@@ -24,7 +24,13 @@ public class JobService {
     private JobDocumentRepository jobDocumentRepository;
 
     public Job createJob(Integer totalDocuments) {
-        Job job = new Job(JobStatus.CREATED, totalDocuments, 0, 0, 0, LocalDateTime.now(), LocalDateTime.now());
+        Job job = new Job(JobStatus.CREATED, 
+            totalDocuments, 
+            0, 
+            0, 
+            0, 
+            LocalDateTime.now(), 
+            LocalDateTime.now());
         return jobRepository.save(job);
     }
 
