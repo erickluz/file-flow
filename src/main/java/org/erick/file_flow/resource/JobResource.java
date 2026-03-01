@@ -1,6 +1,5 @@
 package org.erick.file_flow.resource;
 
-import org.erick.file_flow.JobService;
 import org.erick.file_flow.domain.Job;
 import org.erick.file_flow.domain.JobDocument;
 import org.erick.file_flow.dto.DocumentRequest;
@@ -10,6 +9,7 @@ import org.erick.file_flow.dto.JobRequest;
 import org.erick.file_flow.dto.JobResponse;
 import org.erick.file_flow.dto.ListOfDocuments;
 import org.erick.file_flow.dto.URLResponse;
+import org.erick.file_flow.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
