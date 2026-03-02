@@ -4,6 +4,6 @@ public record URLResponse(
         Long jobId, 
         Long documentId, 
         String uploadURL, 
-        Integer expiresInSeconds
+        Long expiresInSeconds
     ) {
 }

@@ -34,11 +34,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Jobs", description = "Endpoints para gerenciamento de jobs e documentos")
 public class JobResource { 
 
+    @Value("${URL_TIME_DURATION_MINUTES:10}")
+    private Long URLTimeDurationMinutes;
+
     @Autowired
     private JobService jobService;
-
-    @Value("${app.url.expiration-seconds:3600}")
-    private Integer URLexpiresInSeconds;
     
     @PostMapping("/create")
     @Operation(
@@ -103,12 +103,13 @@ public class JobResource {
         DocumentResponse response = new DocumentResponse(
             jobId,
             document.getId(),
+            document.getDocumentUUID(),
             document.getStatus().name(),
-            null,
-            null,
+            document.getOriginalFilename(),
+            document.getContentType(),
             document.getRawKey(),
             document.getResultKey(),
-            null,
+            document.getErrorMessage(),
             document.getSizeBytes(),
             document.geteTag()
         );
@@ -141,7 +142,7 @@ public class JobResource {
             @Parameter(description = "Identificador do job", example = "1") @PathVariable Long jobId,
             @Parameter(description = "Identificador do documento", example = "10") @PathVariable Long documentId) {
         String url = jobService.getGeneratedURL(jobId, documentId);
-        URLResponse response = new URLResponse(jobId, documentId, url, URLexpiresInSeconds);
+        URLResponse response = new URLResponse(jobId, documentId, url, URLTimeDurationMinutes);
         return ResponseEntity.ok(response);
     }
 
@@ -211,6 +212,7 @@ public class JobResource {
         .map(document -> new DocumentResponse(
             jobId,
             document.getId(),
+            document.getDocumentUUID(),
             document.getStatus().name(),
             document.getOriginalFilename(),
             document.getContentType(),
@@ -258,6 +260,7 @@ public class JobResource {
         DocumentResponse response = new DocumentResponse(
             jobId,
             document.getId(),
+            document.getDocumentUUID(),
             document.getStatus().name(),
             document.getOriginalFilename(),
             document.getContentType(),
