@@ -15,6 +15,7 @@ public class JobDocument {
     private Long id;
     @ManyToOne
     private Job job;
+    private Long documentID;
     private DocumentStatus status;
     private String originalFilename;
     private String contentType;
@@ -37,6 +38,12 @@ public class JobDocument {
     }
     public void setJob(Job job) {
         this.job = job;
+    }
+    public Long getDocumentID() {
+        return documentID;
+    }
+    public void setDocumentID(Long documentID) {
+        this.documentID = documentID;
     }
     public DocumentStatus getStatus() {
         return status;
