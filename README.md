@@ -30,6 +30,33 @@ No Windows (PowerShell):
 .\mvnw.cmd spring-boot:run
 ```
 
+## ☁️ Como subir em uma instância EC2
+
+Use o script abaixo na instância para instalar o Java 21, baixar o `.jar` e iniciar a aplicação na porta `8080` com o perfil `prod`:
+
+```bash
+#!/bin/bash
+set -euxo pipefail
+
+APP_DIR=/opt/app
+PORT=8080
+
+dnf -y update
+dnf -y install java-21-amazon-corretto-headless wget
+
+mkdir -p "$APP_DIR"
+
+wget -O "$APP_DIR/app.jar" "https://github.com/erickluz/file-flow/releases/download/0.0.2/file-flow-0.0.2-SNAPSHOT.jar"
+
+ls -lh "$APP_DIR/app.jar"
+file "$APP_DIR/app.jar" || true
+java -version
+
+# Inicia e registra log
+nohup /usr/bin/java -jar "$APP_DIR/app.jar" --server.port=$PORT --spring.profiles.active=prod > /var/log/app.log 2>&1 &
+echo "STARTED: $!" >> /var/log/app.log
+```
+
 ## ⚙️ Perfis
 
 - 🧪 `dev` (default): usa H2 em memória.
