@@ -35,6 +35,60 @@ No Windows (PowerShell):
 - 🧪 `dev` (default): usa H2 em memória.
 - 🏭 `prod`: usa PostgreSQL.
 
+## ☁️ Como instanciar uma EC2 com o projeto
+
+Use o script abaixo como `User Data` ao criar uma instância EC2 Amazon Linux. Ele instala o Java 21, baixa o `.jar` publicado no GitHub Releases, define as variáveis de ambiente do profile `prod` e inicia a aplicação na porta `8080`.
+
+```bash
+#!/bin/bash
+set -euxo pipefail
+
+APP_DIR=/opt/app
+PORT=8080
+
+# =========================
+# VARIAVEIS DE AMBIENTE
+# =========================
+export SPRING_PROFILES_ACTIVE=prod
+export DB_URL=jdbc:postgresql://fileflow.cvwku8gcym4z.us-west-2.rds.amazonaws.com:5432/fileflow
+export DB_USER=postgres
+export DB_PASSWORD=postgres
+
+# =========================
+# INSTALA DEPENDENCIAS
+# =========================
+dnf -y update
+dnf -y install java-21-amazon-corretto-headless wget
+
+mkdir -p "$APP_DIR"
+
+# =========================
+# BAIXA A APLICAÇÃO
+# =========================
+wget -O "$APP_DIR/app.jar" "https://github.com/erickluz/file-flow/releases/download/0.0.2/file-flow-0.0.2-SNAPSHOT.jar"
+
+ls -lh "$APP_DIR/app.jar"
+file "$APP_DIR/app.jar" || true
+java -version
+
+# =========================
+# INICIA A APLICAÇÃO
+# =========================
+nohup /usr/bin/java \
+  -jar "$APP_DIR/app.jar" \
+  --server.port=$PORT \
+  --spring.profiles.active=$SPRING_PROFILES_ACTIVE \
+  > /var/log/app.log 2>&1 &
+
+echo "STARTED: $!" >> /var/log/app.log
+```
+
+Após a instância subir, a aplicação ficará disponível em `http://<ec2-public-ip>:8080`. Para validar, use:
+
+```bash
+curl http://<ec2-public-ip>:8080/actuator/health
+```
+
 ## 🔐 Segurança
 
 - 🔒 Autenticação HTTP Basic para os endpoints da API.
