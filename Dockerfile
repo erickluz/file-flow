@@ -1,6 +1,6 @@
 FROM amazoncorretto:21.0.10
 
-COPY target/file-flow-0.0.2-SNAPSHOT.jar /app/app.jar
+COPY target/file-flow-0.0.3-SNAPSHOT.jar /app/app.jar
 
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV JAVA_OPTS=""
