@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.erick</groupId>
 	<artifactId>file-flow</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>file-flow</name>
 	<description>File Processor</description>
 	<url/>
