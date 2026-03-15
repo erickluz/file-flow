@@ -6,6 +6,8 @@ API em Spring Boot para gerenciamento de jobs e documentos, com geracao de URL p
 
 - Java 21
 - Spring Boot Web, JPA, Security e Actuator
+- OpenTelemetry com exportacao de traces via OTLP
+- Jaeger para visualizacao de traces
 - Springdoc OpenAPI / Swagger UI
 - H2 no ambiente `dev`
 - PostgreSQL no ambiente `prod`
@@ -44,6 +46,24 @@ Windows PowerShell:
 
 ```powershell
 .\mvnw.cmd spring-boot:run
+```
+
+### Observabilidade
+
+O projeto possui observabilidade com OpenTelemetry. Os traces sao exportados via OTLP e podem ser visualizados no Jaeger.
+
+Tambem foi criado um `docker compose` para subir a infraestrutura local de observabilidade com OpenTelemetry Collector e Jaeger.
+
+Para subir a aplicacao no Windows PowerShell com o Java Agent do OpenTelemetry:
+
+```powershell
+$env:JAVA_TOOL_OPTIONS="-javaagent:./otel/opentelemetry-javaagent.jar"
+$env:OTEL_SERVICE_NAME="file-flow"
+$env:OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4318"
+$env:OTEL_TRACES_EXPORTER="otlp"
+$env:OTEL_METRICS_EXPORTER="none"
+$env:OTEL_LOGS_EXPORTER="none"
+java -jar .\target\file-flow-0.0.3-SNAPSHOT.jar
 ```
 
 ## Gerando o jar
